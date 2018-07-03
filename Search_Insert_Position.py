@@ -6,29 +6,24 @@ class Solution:
     """
     def searchInsert(self, A, target):
 
-        lengthA = len(A)
+        right = len(A) - 1
+        left = 0
 
-        upperIndex = (lengthA - 1) if lengthA > 0 else 0
-        lowerIndex = 0
-        binIndex = (lowerIndex + upperIndex) // 2
+        while left <= right:
 
-        while A[binIndex] != target:
+            mid = (left + right) // 2
 
-            if (upperIndex - lowerIndex) > 1:
-
-                if A[binIndex] < target:
-                    lowerIndex = binIndex + 1
-                    upperIndex = max(upperIndex, lowerIndex)
-                else:
-                    upperIndex = binIndex - 1
-                    lowerIndex = min(lowerIndex, upperIndex)
-
-                binIndex = (lowerIndex + upperIndex) // 2
-
+            if A[mid] < target:
+                left = mid + 1
+            elif A[mid] > target:
+                right = mid - 1
             else:
-                if A[binIndex] < target:
-                    return binIndex + 1
-                else:
-                    return binIndex
+                return mid
 
-        return binIndex
+        return left
+
+
+if __name__ == "__main__":
+    test = Solution()
+    indx = test.searchInsert([10, 15, 17], 9)
+    print(indx)
