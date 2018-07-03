@@ -12,20 +12,19 @@ class Solution:
         if right == -1:
             return -1
 
-
-        while left < right:
+        while (left + 1) < right:
 
             mid = (left + right) // 2
 
             if nums[mid] < target:
-                left = mid + 1
-            elif nums[mid] > target:
-                right = mid - 1
+                left = mid
             else:
                 right = mid
 
         if nums[left] == target:
             return left
+        if nums[right] == target:
+            return right
         else:
             return -1
 
