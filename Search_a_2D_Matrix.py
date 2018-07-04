@@ -6,42 +6,23 @@ class Solution:
     """
     def searchMatrix(self, matrix, target):
 
-        def searchList(lst, target):
+        left = 0
+        height = len(matrix); width = len(matrix[0])
+        right = height * width - 1
 
-            left = 0
-            right = len(lst) - 1
-
-            if right == -1:
-                return -1
-
-            while (left + 1) < right:
-
-                mid = (left + right) // 2
-
-                if lst[mid] < target:
-                    left = mid
-                else:
-                    right = mid
-
-            if lst[right] <= target:
-                return right
-            else:
-                return left
-
-        rowHeadList = []
-
-        for i in matrix:
-            rowHeadList.append(i[0])
-
-        if len(rowHeadList) == 0:
+        if right == -1:
             return False
-        else:
-            targetRow = searchList(rowHeadList, target)
-            targetCol = searchList(matrix[targetRow], target)
 
-        if matrix[targetRow][targetCol] == target:
-            return True
         else:
+            while left <= right:
+                mid = (left + right) // 2
+                current = matrix[int(mid/width)][mid % width]
+                if current < target:
+                    left = mid + 1
+                elif current > target:
+                    right = mid - 1
+                else:
+                    return True
             return False
 
 
