@@ -5,7 +5,6 @@ class Solution:
     @return: The first position of target. Position starts from 0.
     """
     def binarySearch(self, nums, target):
-        # write your code here
         right = len(nums) - 1
         left = 0
 
