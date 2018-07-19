@@ -6,18 +6,18 @@ class Solution:
     """
     def removeElement(self, A, elem):
 
-        # removeIndx = checkIndx = 0
-        # lenA = len(A)
-        #
-        # while checkIndx < lenA:
-        #     if A[checkIndx] != elem:
-        #         A[removeIndx] = A[checkIndx]
-        #         removeIndx += 1
-        #     checkIndx += 1
+        removeIndx = checkIndx = 0
+        lenA = len(A)
 
-        for a in A:
-            if a == elem:
-                A.remove(a)
+        while checkIndx < lenA:
+            if A[checkIndx] != elem:
+                A[removeIndx] = A[checkIndx]
+                removeIndx += 1
+            checkIndx += 1
+
+        # for a in A:
+        #     if a == elem:
+        #         A.remove(a)
 
         return len(A)
 
