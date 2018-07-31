@@ -10,27 +10,25 @@ class Solution:
     @return: Preorder in ArrayList which contains node values.
     """
     def preorderTraversal(self, root):
-        reslt, stack = [], []
+        reslt = []
 
-        if not root:
-            return reslt
-        # reslt.append(root.val)
-        # left = root.left
-        # right = root.right
-        # if left:
-        #     reslt += self.preorderTraversal(left)
-        # if right:
-        #     reslt += self.preorderTraversal(right)
-        # return reslt
-        while root or stack:
-            if root:
-                reslt.append(root.val)
-                stack.append(root)
-                root = root.left
-            else:
-                root = stack.pop()
-                root = root.right
+        if root:
+            reslt.append(root.val)
+            if root.left:
+                reslt += self.preorderTraversal(root.left)
+            if root.right:
+                reslt += self.preorderTraversal(root.right)
         return reslt
+        # stack = []
+        # while root or stack:
+        #     if root:
+        #         reslt.append(root.val)
+        #         stack.append(root)
+        #         root = root.left
+        #     else:
+        #         root = stack.pop()
+        #         root = root.right
+        # return reslt
 
 
 if __name__ == "__main__":
