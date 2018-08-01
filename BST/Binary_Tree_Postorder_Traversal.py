@@ -11,22 +11,25 @@ class Solution:
     def postorderTraversal(self, root):
         reslt = []
         if root:
-            # if root.left:
-            #     reslt += self.postorderTraversal(root.left)
-            # if root.right:
-            #     reslt += self.postorderTraversal(root.right)
-            # reslt.append(root.val)
+            reslt += self.postorderTraversal(root.left)
+            reslt += self.postorderTraversal(root.right)
+            reslt.append(root.val)
 
-            stack = []
-            while root or stack:
-                if root:
-                    stack.append(root)
-                    root = root.left
-                else:
-                    root = stack.pop()
-                    root = root.right
-                    reslt.append(root.val)
-
+            # stack = []
+            # while root or stack:
+            #     if root:
+            #         stack.append(root)
+            #         root = root.left
+            #     else:
+            #         root = stack.pop()
+            #         if root.right:
+            #             temp = root.right
+            #             root.right = None
+            #             stack.append(root)
+            #             root = temp
+            #         else:
+            #             reslt.append(root.val)
+            #             root = None
         return reslt
 
 
