@@ -12,17 +12,16 @@ class Solution:
     @return: Successor of p.
     """
     def inorderSuccessor(self, root, p):
-        pre = None
-        while root:
-            if root.val == p.val:
-                return root.right or pre
-            else:
-                if root.val < p.val:
+
+        successor = None
+        if root and p:
+            while root:
+                if root.val <= p.val:
                     root = root.right
                 else:
-                    pre = root
+                    successor = root
                     root = root.left
-        return None
+        return successor
 
 
 if __name__ == "__main__":
