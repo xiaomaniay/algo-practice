@@ -13,22 +13,14 @@ class Solution:
         if not T2:
             return True
         if T1:
-            sameValueNode = self.findT2Value(T1, T2)
-            for node in sameValueNode:
-                isIdentical = self.isIdentical(node, T2)
-                if isIdentical:
-                    return True
+            checkRoot = self.isIdentical(T1, T2)
+            if checkRoot:
+                return True
+            checkLeft = self.isSubtree(T1.left, T2)
+            checkRight = self.isSubtree(T1.right, T2)
+            if checkLeft or checkRight:
+                return True
         return False
-
-    def findT2Value(self, T1, T2):
-        sameValueNode = []
-        if T1:
-            if T1.val == T2.val:
-                sameValueNode.append(T1)
-            leftNode = self.findT2Value(T1.left, T2)
-            rightNode = self.findT2Value(T1.right, T2)
-            sameValueNode = sameValueNode + leftNode + rightNode
-        return sameValueNode
 
     def isIdentical(self, a, b):
         if not (a or b):
