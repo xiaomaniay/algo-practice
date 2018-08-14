@@ -9,24 +9,43 @@ class Solution:
     @return: Level order a list of lists of integer
     """
     def levelOrder(self, root):
-
-        nodes = [[root]]
-        reslt = [[root.val]]
-        for list in nodes:
-            newListNode = []
-            newListVal = []
-            for element in list:
-                if element.left:
-                    newListNode.append(element.left)
-                    newListVal.append(element.left.val)
-                if element.right:
-                    newListNode.append(element.right)
-                    newListNode.append(element.right.val)
-            if len(newListNode) > 0:
-                nodes.append(newListNode)
-                reslt.append(newListVal)
-
+        # if not root:
+        #     return []
+        # nodes = [root]
+        # reslt = [[root.val]]
+        # while nodes:
+        #     newListNode = []
+        #     newListVal = []
+        #     for element in nodes:
+        #         if element.left:
+        #             newListNode.append(element.left)
+        #             newListVal.append(element.left.val)
+        #         if element.right:
+        #             newListNode.append(element.right)
+        #             newListVal.append(element.right.val)
+        #     if len(newListNode) > 0:
+        #         reslt.append(newListVal)
+        #     nodes = newListNode
+        # return reslt
+        depth, reslt = 0, []
+        reslt = self.dfs(root, reslt, depth)
         return reslt
+
+    def dfs(self, root, reslt, depth):
+        if not root:
+            return None
+        if len(reslt) < depth + 1:
+            reslt.append([])
+        reslt[depth].append(root.val)
+        self.dfs(root.left, reslt, depth + 1)
+        self.dfs(root.right, reslt, depth + 1)
+        return reslt
+
+
+
+
+
+
 
 
 
