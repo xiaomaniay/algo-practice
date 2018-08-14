@@ -9,16 +9,13 @@ class Solution:
     @param root: The root of binary tree
     @return: An integer
     """
-    def minDepth(self, root):
+    def maxDepth(self, root):
         if not root:
             return 0
         else:
-            leftMinDepth = self.minDepth(root.left)
-            rightMinDepth = self.minDepth(root.right)
-            if leftMinDepth > 0 and rightMinDepth > 0:
-                depth = 1 + min(leftMinDepth, rightMinDepth)
-            else:
-                depth = 1 + (leftMinDepth if leftMinDepth > 0 else rightMinDepth)
+            leftMinDepth = self.maxDepth(root.left)
+            rightMinDepth = self.maxDepth(root.right)
+            depth = 1 + max(leftMinDepth, rightMinDepth)
             return depth
 
 
