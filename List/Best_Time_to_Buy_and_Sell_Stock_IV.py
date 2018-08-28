@@ -5,60 +5,50 @@ class Solution:
     @return: Maximum profit
     """
     def maxProfit(self, K, prices):
-        total_profit, max_profit = [], 0
-        total_profit = self.multi_trans(K, prices)
-        for i in range(len(total_profit)):
-            if total_profit[i] > max_profit:
-                max_profit = total_profit[i]
-        return max_profit
-
-    def multi_trans(self, K, prices):
-        total_profit = []
-        first_profit = self.forward(prices)
-        if (K - 1) > 1:
-            second_profit = self.multi_trans(K - 1, prices[1:])
-        elif (K - 1) == 1:
-            second_profit = self.backward(prices)
-        else:
-            return first_profit
-        for i in range(len(first_profit)):
-            new_profit = first_profit[i]
-            if i < len(second_profit):
-                new_profit += second_profit[i]
-            total_profit.append(new_profit)
+        total_profit = 0
+        profits = self.max_tranc(prices)
+        while K < len(profits):
+            profits = self.less_tranc(profits)
+        for profit in profits:
+            total_profit += profit[2]
         return total_profit
 
-    def forward(self, prices):
-        profit = [0]
-        if prices:
-            buy_min = prices[0]
-            for i in range(1, len(prices)):
-                if prices[i] < buy_min:
-                    buy_min = prices[i]
-                new_profit = prices[i] - buy_min
-                if new_profit > profit[-1]:
-                    profit.append(new_profit)
-                else:
-                    profit.append(profit[-1])
-        return profit
+    def less_tranc(self, profits): #reduce one tranction
+        if len(profits) > 1:
+            indx, min_profit = 0, profits[0][2]
+            for i in range(1, len(profits)):
+                if profits[i][2] < min_profit:
+                    indx, min_profit = i, profits[i][2]
 
-    def backward(self, prices):
-        profit = [0]
-        if prices:
-            sell_max = prices[len(prices) - 1]
-            for i in range(len(prices) - 2, 0, -1):
-                if prices[i] > sell_max:
-                    sell_max = prices[i]
-                new_profit = sell_max - prices[i]
-                if new_profit > profit[0]:
-                    profit.insert(0, new_profit)
-                else:
-                    profit.insert(0, profit[0])
-        return profit
+            profit_one = profit_two = 0
+            if indx > 0:
+                if (profits[indx][1] - profits[indx - 1][0]) > profits[indx - 1][2]:
+                    profit_one = profits[indx][1] - profits[indx - 1][0]
+            if indx < len(profits) - 1:
+                if (profits[indx + 1][1] - profits[indx][0]) > profits[indx + 1][2]:
+                    profit_two = profits[indx + 1][1] - profits[indx][0]
+            if profit_one > profit_two:
+                profits[indx - 1][1], profits[indx - 1][2] = profits[indx][1], profit_one
+            if profit_two > profit_one:
+                profits[indx + 1][0], profits[indx + 1][2] = profits[indx][0], profit_two
+            del profits[indx]
+        return profits
+
+    def max_tranc(self, prices): #maximum tranctions that could happen
+        profits = []
+        i, length = 0, len(prices)
+        while i < length:
+            buy_min = sell_max = prices[i]
+            while i < length and prices[i] >= sell_max:
+                sell_max = prices[i]
+                i += 1
+            profit = sell_max - buy_min
+            if profit > 0:
+                profits.append([buy_min, sell_max, profit])
+        return profits
 
 
 if __name__ == "__main__":
-    prices = [4,4,6,1,1,4,2,5]
-
-    reslt = Solution().maxProfit(4,prices)
+    prices = [780,434,108,729,903,713,382,126,426,858,362,576,848,237,739,536,524,446,494,959,831,541,872,685,591,488,219,121,87,991]
+    reslt = Solution().maxProfit(5, prices)
     print(reslt)

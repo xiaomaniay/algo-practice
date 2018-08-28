@@ -10,44 +10,21 @@ class Solution:
     @return: The maximum amount of money you can rob tonight
     """
     def houseRobber3(self, root):
-        if not root:
-            return 0
-        stack = []
-        pre = curr = 0
-        while root or stack:
-            if root:
-                stack.append(root)
-                root = root.left
-            else:
-                root = stack.pop()
+        memo = {None: 0}
+
+        def dfs(root):
+            if root not in memo.keys():
+                left, right = root.left, root.right
+                ll = lr = rl = rr = None
+                if root.left:
+                    ll, lr = left.left, left.right
                 if root.right:
-                    temp = root.right
-                    root.right = None
-                    root = temp
-                else:
-                    temp = pre
-                    pre = curr
-                    curr = max(root.val + temp, curr)
-                    root = None
-        return curr
-
-    # def houseRobber3(self, root):
-    #     if not root:
-    #         return 0
-    #     if root.left:
-    #         left_val = self.houseRobber3(root.left)
-    #         left_pre = self.houseRobber3(root.left.left) + self.houseRobber3(root.left.right)
-    #     else:
-    #         left_val = left_pre = 0
-    #     if root.right:
-    #         right_val = self.houseRobber3(root.right)
-    #         right_pre = self.houseRobber3(root.right.left) + self.houseRobber3(root.right.right)
-    #     else:
-    #         right_val = right_pre = 0
-    #     pre = left_pre + right_pre
-    #     curr = left_val + right_val
-    #     return max(pre + root.val, curr)
-
+                    rl, rr = right.left, right.right
+                pre = dfs(ll) + dfs(lr) + dfs(rl) + dfs(rr)
+                curr = dfs(left) + dfs(right)
+                memo[root] = max(pre + root.val, curr)
+            return memo[root]
+        return dfs(root)
 
 if __name__ == "__main__":
     a = TreeNode(3)
