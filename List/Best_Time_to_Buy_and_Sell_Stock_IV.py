@@ -1,3 +1,4 @@
+"""Not finished yet"""
 class Solution:
     """
     @param K: An integer
@@ -27,9 +28,11 @@ class Solution:
             if indx < len(profits) - 1:
                 if (profits[indx + 1][1] - profits[indx][0]) > profits[indx + 1][2]:
                     profit_two = profits[indx + 1][1] - profits[indx][0]
-            if profit_one > profit_two:
+            increment_one = profit_one - profits[indx - 1][2]
+            increment_two = profit_two - profits[indx + 1][2]
+            if profit_one > 0 and increment_one > increment_two:
                 profits[indx - 1][1], profits[indx - 1][2] = profits[indx][1], profit_one
-            if profit_two > profit_one:
+            if profit_two > 0 and increment_two > increment_one:
                 profits[indx + 1][0], profits[indx + 1][2] = profits[indx][0], profit_two
             del profits[indx]
         return profits
