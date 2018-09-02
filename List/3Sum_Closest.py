@@ -43,6 +43,7 @@ class Solution:
         l += rl[b:] if b < len(rl) else ll[a:]
         return l
 
+
 if __name__ == "__main__":
     a = [2,7,11,15]
     print(Solution().threeSumClosest(a, 0))
