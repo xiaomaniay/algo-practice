@@ -6,39 +6,21 @@ class Solution:
     """
     def fourSum(self, numbers, target):
         reslts = set()
-        if numbers:
-            sorted_nums = sorted(numbers)
-            pairs = self.pairs(sorted_nums)
-            two_sums = self.two_sum([key for key in pairs.keys()], target)
-            for two_sum in two_sums:
-                for t1 in pairs[two_sum[0]]:
-                    for t2 in pairs[two_sum[1]]:
-                        if not set(t1).intersection(set(t2)):
-                            a, b, c, d = sorted_nums[t1[0]], sorted_nums[t1[1]], sorted_nums[t2[0]], sorted_nums[t2[1]]
-                            reslts.add(tuple(sorted([a, b, c, d])))
+        s_nums = sorted(numbers)
+        if s_nums:
+            for i in range(0, len(s_nums)):
+                if i != 0 and s_nums[i] == s_nums[i - 1]:
+                    continue
+                for j in range(i + 1, len(numbers)):
+                    if j != i + 1 and s_nums[j] == s_nums[j - 1]:
+                        continue
+                    diff = target - (s_nums[i] + s_nums[j])
+                    h_nums = set()
+                    for l in range(j + 1, len(s_nums)):
+                        if (diff - s_nums[l]) in h_nums:
+                            reslts.add((s_nums[i], s_nums[j], diff - s_nums[l], s_nums[l]))
+                        h_nums.add(s_nums[l])
         return list(reslts)
-
-    def pairs(self, nums):
-        pairs = {}
-        for i in range(0, len(nums)):
-            for j in range(i + 1, len(nums)):
-                if (nums[i] + nums[j]) in pairs:
-                    pairs[nums[i] + nums[j]].append((i, j))
-                else:
-                    pairs[nums[i] + nums[j]] = [(i, j)]
-        return pairs
-
-    def two_sum(self, nums, target):
-        two_sums, nums_set = set(), set()
-        for i in range(0, len(nums)):
-            if (target - nums[i]) in nums_set:
-                two_sums.add((target - nums[i], nums[i]))
-            nums_set.add(nums[i])
-        return two_sums
-
-
-
-
 
 
 if __name__ == "__main__":
