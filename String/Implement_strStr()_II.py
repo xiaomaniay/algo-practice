@@ -7,29 +7,30 @@ class Solution:
     def strStr(self, source, target):
         if not target:
             return 0
-        if len(source) >= len(target):
-            cur = 0
-            partial_match = self.partial_match(target)
-            while cur <= len(source) - len(target):
-                for i in range(len(target)):
-                    if source[i + cur] != target[i]:
-                        cur += max(i - partial_match[i - 1], 1)
-                        break
-                else:
-                    return cur
-        return -1
+        cur, i = 0, 0
+        next_table = self.next(target)
+        while cur < len(source) and i < len(target):
+            if (i == -1 or source[cur] == target[i]):
+                i += 1
+                cur += 1
+            else:
+                i = next_table[i]
+        if i == len(target):
+            return cur - i
+        else:
+            return -1
 
     def next(self, target):
-        i, j = -1, 0
-        next = []
+        k, j = -1, 0
+        next_table = [-1]
         while j < len(target):
-            if i == -1 or target[i] == target[j]:
-                i += 1; j += 1
-                next.append(i)
+            if k == -1 or target[k] == target[j]:
+                k += 1
+                j += 1
+                next_table.append(k)
             else:
-                i = next[i]
-        return next
-
+                k = next_table[k]
+        return next_table
 
 
 
