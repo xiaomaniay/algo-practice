@@ -4,17 +4,20 @@ class Solution:
     @param target:
     @return: return the index
     """
-    def strStr(self, source, target):
-        if not target:
+    def strStr2(self, source, target):
+        if target is None:
+            return -1
+        if target == "":
             return 0
         cur, i = 0, 0
         next_table = self.next(target)
-        while cur < len(source) and i < len(target):
-            if (i == -1 or source[cur] == target[i]):
-                i += 1
-                cur += 1
-            else:
-                i = next_table[i]
+        if source:
+            while cur < len(source) and i < len(target):
+                if i == -1 or source[cur] == target[i]:
+                    i += 1
+                    cur += 1
+                else:
+                    i = next_table[i]
         if i == len(target):
             return cur - i
         else:
@@ -33,8 +36,7 @@ class Solution:
         return next_table
 
 
-
 if __name__ == "__main__":
     source = "abcde"
     target = "e"
-    print(Solution().strStr(source, target))
+    print(Solution().strStr2(source, target))
