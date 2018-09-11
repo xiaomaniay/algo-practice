@@ -31,21 +31,24 @@ class Solution:
     def isInterleave(self, s1, s2, s3):
         if len(s1) + len(s2) != len(s3):
             return False
-        match_table = [[False] * (len(s2) + 1)] * (len(s1) + 1)
+        match_table = [[False for i in range(0, len(s2) + 1)] for j in range(0, len(s1) + 1)]
         match_table[0][0] = True
         for i in range(0, len(s1)):
-            if s3[i] != s1[i]:
-                break
-            else:
+            if s3[i] == s1[i] and match_table[i][0]:
                 match_table[i + 1][0] = True
-        for j in range(0, len(s2)):
-            if s3[j] != s2[j]:
-                break
             else:
+                break
+        for j in range(0, len(s2)):
+            if s3[j] == s2[j] and match_table[0][j]:
                 match_table[0][j + 1] = True
+            else:
+                break
         for m in range(1, len(s1) + 1):
             for n in range(1, len(s2) + 1):
-
+                if (s3[m + n - 1] == s1[m - 1] and match_table[m - 1][n]) \
+                        or (s3[m + n - 1] == s2[n - 1] and match_table[m][n - 1]):
+                    match_table[m][n] = True
+        return match_table[len(s1)][len(s2)]
 
 
 
@@ -57,8 +60,8 @@ class Solution:
 
 
 if __name__ == "__main__":
-    s1 = "aa"
-    s2 = "a"
-    s3 = "aaa"
+    s1 = "abcabc"
+    s2 = "ac"
+    s3 = "aabcabcc"
     print(Solution().isInterleave(s1, s2, s3))
 
