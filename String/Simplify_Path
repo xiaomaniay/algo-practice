@@ -1,0 +1,27 @@
+class Solution:
+    """
+    @param path: the original path
+    @return: the simplified path
+    """
+    def simplifyPath(self, path):
+        dl = al = 0
+        list_p = path.split("/")
+        stack = []
+        for i in list_p:
+            if i and i != ".":
+                if i == "..":
+                    al += 1
+                    if stack:
+                        stack.pop()
+                else:
+                    dl += 1
+                    stack.append(i)
+        return '/' + '/'.join(stack)
+
+
+if __name__ == "__main__":
+    path = "/.."
+    print(Solution().simplifyPath(path))
+
+
+
