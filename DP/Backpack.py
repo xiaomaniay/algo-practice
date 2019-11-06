@@ -21,6 +21,23 @@ class Solution:
             if size[i] == 1:
                 return i
 
+    def backpack(self, m, A):
+        if not A:
+            return 0
+        size = [0 for i in range(m)]
+        for i in range(len(A)):
+            for j in range(m - 1, -1, -1):
+                if size[j] == 1:
+                    if (j + A(j)) < m:
+                        size[j + A[j]] = 1
+                        continue
+                    if (j + A(j)) == m:
+                        return m
+        for i in range(m - 1, -1, -1):
+            if size[i] == 1:
+                return i
+
+
 
 
 if __name__ == "__main__":
