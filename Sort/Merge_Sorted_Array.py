@@ -22,6 +22,8 @@ class Solution:
         A[:b + 1] = B[:b + 1]
 
         return A
+
+
 if __name__ == "__main__":
     test = Solution()
     A, m = [1,2,3,0,0], 3
