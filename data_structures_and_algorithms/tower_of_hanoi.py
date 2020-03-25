@@ -3,7 +3,7 @@ def hanoi(n, a, b, c):
         return
     else:
         hanoi(n - 1, a, c, b)
-        print('Moving from ' + str(a) + ' to ' + str(c))
+        print('Moving from a: ' + str(a) + ' to c: ' + str(c))
         c.append(a.pop())
         hanoi(n - 1, b, a, c)
 
