@@ -1,3 +1,4 @@
+import collections
 
 class TreeNode:
     def __init__(self, val):
@@ -14,28 +15,19 @@ class Solution:
     """
     def serialize(self, root):
         serialized = []
-        nodes = [root]
-        self.bfs(nodes, serialized)
-        serialized.append(self.bfs(nodes, serialized))
 
-    def bfs(self, nodes, serialized):
-        next_level = []
-        for node in nodes:
-            if node is not '#':
-                serialized.append(node.val)
-                if node.left:
-                    next_level.append(node.left)
-                else:
-                    next_level.append('#')
-                if node.right:
-                    next_level.append(node.right)
-                else:
-                    next_level.append('#')
-        if not next_level:
-            self.bfs(next_level, serialized)
+        def preorder(root):
+            if root:
+                serialized.append(root.val)
+                preorder(root.left)
+                preorder(root.right)
+            else:
+                serialized.append('#')
 
+        preorder(root)
+        serialized.pop()
 
-
+        return '{' + ','.join(str(x) for x in serialized) + '}'
 
     """
     @param data: A string serialized by your serialize method.
@@ -46,4 +38,23 @@ class Solution:
     "serialize" method.
     """
     def deserialize(self, data):
-        # write your code here
+        nodes = collections.deque([x for x in data[1: -1].split(',')])
+        if not nodes:
+            return TreeNode(None)
+
+        def build(nodes):
+            if nodes:
+                val = nodes.popleft()
+                if val is not '#':
+                    root = TreeNode(val)
+                    root.left = build(nodes)
+                    root.right = build(nodes)
+                    return root
+            else:
+                return None
+
+        return build(nodes)
+
+
+root = Solution().deserialize('{3,9,#,#,20,15,7}')
+print(Solution().serialize(root))

@@ -11,3 +11,12 @@ class Solution:
                 return [hash_reslt[target - numbers[i]], i]
             hash_reslt[numbers[i]] = i
         return [-1, -1]
+
+    def twoSum2(self, numbers, target):  # practice
+        hash = {}
+        for i in range(len(numbers)):
+            if target - numbers[i] in hash:
+                return [hash[target - numbers[i]], i]
+            hash[numbers[i]] = i
+        return [-1, -1]
+

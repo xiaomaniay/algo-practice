@@ -26,3 +26,14 @@ class Solution:
             temp.next = newHead
             newHead = temp
         return newHead
+
+    def reverse2(self, head):  # practice
+        if not head:
+            return head
+        pre = head
+        while head.next:
+            temp = head.next
+            head.next = temp.next
+            temp.next = pre
+            pre = temp
+        return pre

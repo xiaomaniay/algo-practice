@@ -4,44 +4,24 @@ class Solution:
     @return: Find all unique triplets in the array which gives the sum of zero.
     """
     def threeSum(self, numbers):
-        reslts = set()
-        sorted_numbers = self.merge_sort(numbers)
-        for i in range(0, len(sorted_numbers)):
-            two_sums = self.check(sorted_numbers[:i], 0 - sorted_numbers[i])
-            if two_sums:
-                for two_sum in two_sums:
-                    reslts.add((two_sum[0], two_sum[1], sorted_numbers[i]))
-        return list(reslts)
+        reslt = set()
+        numbers = sorted(numbers)
+        for i in range(len(numbers)):
+            if numbers[i] > 0:
+                break
+            two_sums = self.two_sum(numbers[i+1:], 0 - numbers[i])
+            for j in two_sums:
+                reslt.add((numbers[i], j[0], j[1]))
+        return list(reslt)
 
-    def check(self, numbers, k):
-        two_sums = set()
-        nums_set = set()
-        for i in range(0, len(numbers)):
-            if (k - numbers[i]) in nums_set:
-                two_sums.add((k - numbers[i], numbers[i]))
-            nums_set.add(numbers[i])
-        return two_sums
-
-    def merge_sort(self, numbers):
-        if len(numbers) > 1:
-            mid = int(len(numbers)/2)
-            ll = self.merge_sort(numbers[:mid])
-            rl = self.merge_sort(numbers[mid:])
-            numbers = self.merge(ll, rl)
-        return numbers
-
-    def merge(self, ll, rl):
-        l = []
-        a = b = 0
-        while a < len(ll) and b < len(rl):
-            if ll[a] <= rl[b]:
-                l.append(ll[a])
-                a += 1
-            else:
-                l.append(rl[b])
-                b += 1
-        l += rl[b:] if b < len(rl) else ll[a:]
-        return l
+    def two_sum(self, lst, target):
+        reslt = set()
+        pre = set()
+        for i in range(len(lst)):
+            if target - lst[i] in pre:
+                reslt.add((target - lst[i], lst[i]))
+            pre.add(lst[i])
+        return reslt
 
 
 if __name__ == "__main__":

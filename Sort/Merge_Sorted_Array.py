@@ -6,12 +6,28 @@ class Solution:
     @param: n: An integer
     @return: nothing
     """
+    # def mergeSortedArray(self, A, m, B, n):
+    #     endpoint = m + n - 1
+    #     a = m - 1
+    #     b = n - 1
+    #
+    #     while a > -1 and b > - 1:
+    #         if A[a] <= B[b]:
+    #             A[endpoint] = B[b]
+    #             b -= 1
+    #         else:
+    #             A[endpoint] = A[a]
+    #             a -= 1
+    #         endpoint -= 1
+    #     A[:b + 1] = B[:b + 1]
+    #
+    #     return A
+
     def mergeSortedArray(self, A, m, B, n):
         endpoint = m + n - 1
         a = m - 1
         b = n - 1
-
-        while a > -1 and b > - 1:
+        while a > -1 and b > -1:
             if A[a] <= B[b]:
                 A[endpoint] = B[b]
                 b -= 1
@@ -20,9 +36,7 @@ class Solution:
                 a -= 1
             endpoint -= 1
         A[:b + 1] = B[:b + 1]
-
         return A
-
 
 if __name__ == "__main__":
     test = Solution()
